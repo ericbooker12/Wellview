@@ -1,0 +1,7 @@
+What I did to get setup.
+
+1. made repository
+2. cloned repository to file call wellview.
+3. created new rails app called well view.
+4. Copied everything from inner wellview fiolder and moved it into parent wellview folder.
+5. Deleted inner wellview folder.
