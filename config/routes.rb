@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  get 'measurement/index'
+  root 'main#index'
+  get 'measurements/index'
+  get '/measurements' => 'measurements#index'
+  
 
   resources :measurements
 
   get 'welcome/index'
 
-  root 'main#index'
   end
