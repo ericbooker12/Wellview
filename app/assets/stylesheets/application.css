@@ -13,3 +13,41 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* Create variables for common formatting */
+:root {
+  --color-background-landing: #312F2F;
+  --color-background-top-bar: #EEEEEE;
+  --color-background-bottom-bar: #34495e;
+  --color-background-button: #EEEEEE;
+  --color-background-button-walk: #e67e22;
+  --color-background-main: #ecf0f1;
+  --color-background-connected: #2ecc71;
+  --color-background-walk: #bdc3c7;
+  --color-background-safe: #3498db;
+  --color-text-light: #FEFFFE;
+  --color-text-dark: #312F2F;
+  --color-borders: #CCCCCC;
+  font-family: 'Futura', sans-serif;
+}
+
+ #header_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 10vh;
+  background-color: var(--color-background-bottom-bar);
+  font-size: 3em;
+  color: var(--color-text-light);
+}
+
+#chart_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 80vh;
+}
