@@ -9,7 +9,7 @@ var getData = function() {
   //   event.preventDefault();
   //   console.log("'Show Chart' clicked")
   
-    var urlVariable = '/';
+    var urlVariable = '/measurements';
     var method = 'GET';
 
     var request = $.ajax({
@@ -21,7 +21,7 @@ var getData = function() {
     request.done(function(responseData, status, jqXHR ) {
       // console.log("getFields: " + status);
       // console.log("jqXHR: " + jqXHR);
-      console.log("*********", responseData)
+      console.log(responseData)
     });
 
     request.fail(function(responseData) {

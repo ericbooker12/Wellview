@@ -4,4 +4,6 @@ Rails.application.routes.draw do
 
   resources :measurements
 
+  # get '/measurements' => 'measurement#data'
+
 end
