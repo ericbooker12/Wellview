@@ -19,9 +19,9 @@ var getData = function() {
 
     // Get the data from '/measurements' url
     request.done(function(responseData, status, jqXHR ) {
-      console.log("getFields: " + status);
-      console.log("jqXHR: " + jqXHR);
-      console.log(responseData)
+      // console.log("getFields: " + status);
+      // console.log("jqXHR: " + jqXHR);
+      console.log("*********", responseData)
     });
 
     request.fail(function(responseData) {
