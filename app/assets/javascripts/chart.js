@@ -5,7 +5,6 @@ $(document).ready(function() {
 var getData = function() {
   console.log("Inside getData function")
   
-  var data;
   var urlVariable = '/measurements';
   var method = 'GET';
 
@@ -18,7 +17,8 @@ var getData = function() {
   request.done(function(responseData, status, jqXHR ) {
     console.log("getFields: " + status);
     console.log("jqXHR: " + jqXHR);
-    console.log(responseData[0]);
+    data = responseData
+    // console.log(responseData[0]);
     prepData(responseData);
   });
 
@@ -29,33 +29,44 @@ var getData = function() {
 
 // -------------------------------------------------------
 
+var ch = 864;
 var prepData = function(data) {
+  console.log(data);
 
-
-
-  createChart(data, 0);
+  var column1 = {
+    lineData: "tempIn",
+    offset: 0,
+    width: 100,
+    height: 864,
+    color: "#0000ff",
+    stroke: 1,
+    fill: "none",
+    header: "Temperature In"
+  };
+  
+  createChart(data, 0, column1)
 }
 
-var createChart = function(data, xPos) {
+var createChart = function(data, xPos, colData) {
   JSON.stringify(data);
   var depthCol = 50;
+
+  console.log(colData)
 
   // get domain, min and max depth
   var extent = d3.extent(data, function(d){
     return d.depth;
-  })
+  });
 
   // get domain, min and max depth
   var dataExtent = d3.extent(data, function(d){
     return d.temp_out;
-  })
-
-  console.log(dataExtent)
+  });
 
   // Set up the globals
   var margin = {top: 30, right:40, bottom: 30, left: 50};
-  var width = 400 - margin.left - margin.right;
-  var height = 2000 - margin.top - margin.bottom;
+  var width = colData.width; //400 - margin.left - margin.right;
+  var height = colData.height - margin.top - margin.bottom;
 
   var minDepth = extent[0];
   var maxDepth = extent[1];
@@ -65,8 +76,6 @@ var createChart = function(data, xPos) {
   console.log("temp max = " , tempOutMax)
   var x = d3.scale.linear().domain(dataExtent).range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
-  var xTI = d3.scale.linear().range([0 + margin.left, width]);
-  var yTI = d3.scale.linear().range([height, 0]);
 
   // Define the axes
   var xAxis = d3.svg.axis().scale(x)
@@ -76,13 +85,36 @@ var createChart = function(data, xPos) {
     .orient("left").ticks(10)
 
   // Define the lines
-  var tempOut = d3.svg.line()
-    .x(function(d) { return x(d.temp_out); })
+  switch (colData.lineData) {
+  case "tempOut":
+      console.log("Plotting Temp-Out data")
+      var lineData = d3.svg.line()
+        .x(function(d) { return x(d.temp_out); })
+        .y(function(d) { return y(d.depth);    })
+        .interpolate("basis")
+      break;
+
+  case "tempIn":
+    console.log("Plotting Temp-In data")
+      var lineData = d3.svg.line()
+        .x(function(d) { return x(d.temp_in); })
+        .y(function(d) { return y(d.depth);    })
+        .interpolate("basis")
+      break;
+  }
+
+  var press = d3.svg.line()
+    .x(function(d) { return x(d.pressure); })
     .y(function(d) { return y(d.depth);    })
     .interpolate("basis")
 
-  var tempIn = d3.svg.line()
-    .x(function(d) { return x(d.temp_in); })
+  var rop = d3.svg.line()
+    .x(function(d) { return x(d.rop); })
+    .y(function(d) { return y(d.depth);    })
+    .interpolate("basis")
+
+  var wob = d3.svg.line()
+    .x(function(d) { return x(d.wob); })
     .y(function(d) { return y(d.depth);    })
     .interpolate("basis")
 
@@ -91,7 +123,7 @@ var createChart = function(data, xPos) {
     .append("svg")
       .attr("width", depthCol)
       .attr("height", height + margin.top + margin.bottom )
-      .attr("transform", "translate(" + xPos + ", 0)")
+      .attr("transform", "translate(" + colData.offset + ", 0)")
       .style('background-color', '#ffffff')
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -110,28 +142,16 @@ var createChart = function(data, xPos) {
     // x.domain(d3.extent(data, function(d) {  return d.temp_out;}))
     x.domain([0, 400])
     y.domain([d3.max(data, function(d) {  return d.depth; }), 0])
-
-    xTI.domain([50, 450])
-    yTI.domain([d3.max(data, function(d) {  return d.depth; }), 0])
     
     // Add the line path
     svg.append("path")
         .attr("class", "line")
-        .attr("d", tempOut(data))
+        .attr("d", lineData(data))
         .style({
-          fill: "none",
-          stroke: "#ff0000",
-        });
-
-    svg.append("path")
-        .attr("class", "line")
-        .attr("d", tempIn(data))
-        .style({
-          fill: "none",
-          stroke: "#0000ff",
+          fill: colData.fill,
+          stroke: colData.color,
         });
    
-    
     // Add the x-axis
     svg.append("g")
       .attr("class", "axis")
@@ -154,14 +174,8 @@ var createChart = function(data, xPos) {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "underline")
-        .text("Temp Out");
+        .text(colData.header);
 
-  function make_y_axis() { return d3.svg.axis()
-        .scale(y)
-        .orient("right")
-        .ticks(10)
-
-  }
 };
 
 
