@@ -22,7 +22,17 @@ end
 	rig_id: 2
 )
  new_well.save!
- p new_well.persisted?
+
+ data = Measurement.new(
+		depth: 0,
+		rop: 0,
+		wob: 0,
+		temp_in: 0,
+		temp_out: 0,
+		pressure: 0,
+		well_id: 1
+	) 
+ data.save!
 
 
 rows = []
@@ -50,10 +60,18 @@ rows.each do |row|					#[69.00, 139.30, 35.90, 54.30, 58.42, 635.66]
 		well_id: 1
 	) 
 	data.save!
-	p data.persisted?
-	# p data
 end
 
+data = Measurement.new(
+		depth: 7623,
+		rop: 0,
+		wob: 0,
+		temp_in: 0,
+		temp_out: 0,
+		pressure: 0,
+		well_id: 1
+	) 
+ data.save!
 
 # Seed rig data
 Rig.create(
