@@ -13,3 +13,114 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* Create variables for common formatting */
+:root {
+  --color-background-landing: #312F2F;
+  --color-background-top-bar: #EEEEEE;
+  --color-background-bottom-bar: #34495e;
+  --color-background-button: #EEEEEE;
+  --color-background-button-walk: #e67e22;
+  --color-background-main: #ecf0f1;
+  --color-background-connected: #2ecc71;
+  --color-background-walk: #bdc3c7;
+  --color-background-safe: #3498db;
+  --color-text-light: #FEFFFE;
+  --color-text-dark: #312F2F;
+  --color-borders: #CCCCCC;
+  font-family: 'Futura', sans-serif;
+}
+
+ .flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 800px;
+
+}
+
+body > div > header, nav, main, aside, footer {
+  background: #ccc;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 20px;
+}
+
+header {
+  order: 1;
+  height: 100px;
+  flex: 0 1 100%;
+}
+
+nav {
+  order: 2;
+  flex: 0 1 200px;
+}
+
+main {
+  order: 3;
+  min-height: 400px;
+  flex: 1;
+}
+
+aside {
+  order: 4;
+  flex: 0 1 200px;
+}
+
+footer {
+  order: 5;
+  height: 100px;
+  flex: 0 1 100%;
+}
+
+#chart_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  border: 1px solid gray;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+body { 
+  font: 12px "Times New Roman", Georgia, Serif;;
+}
+
+
+path {
+  /*stroke: steelblue; */
+  stroke-width: 1; 
+  /*fill: yes;*/
+}
+.area {
+  fill: lightsteelblue; 
+  stroke-width: 0;
+}
+
+.grid .tick {
+  stroke: lightgrey; 
+  stroke-opacity: 0.7; 
+  shape-rendering: crispEdges;
+}
+.grid path {
+  stroke-width: 0;
+}
+
+.axis .minor {
+  stroke: red;
+  stroke-width: 0.4px;
+}
+
+
+
+

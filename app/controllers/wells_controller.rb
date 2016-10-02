@@ -1,0 +1,3 @@
+class WellsController < ApplicationController
+	
+end

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  locatation: MyString
+  start_date: MyString
+  end_date: MyString
+  total_depth: 1.5
+  rig_id: MyString
+
+two:
+  name: MyString
+  locatation: MyString
+  start_date: MyString
+  end_date: MyString
+  total_depth: 1.5
+  rig_id: MyString

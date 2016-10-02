@@ -9,6 +9,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="flex-container">
+      <header>Header</header>
+      <nav>Navigation</nav>
+      <main><%= yield %></main>
+      <aside>Aside Content</aside>
+      <footer>Footer</footer>
+    </div>
   </body>
 </html>
