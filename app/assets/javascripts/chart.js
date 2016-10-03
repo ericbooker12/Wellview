@@ -42,7 +42,7 @@ $(document).ready(function() {
 
   var dataCol = d3.select("#chart_container")
     .append("svg")
-      .attr('id', 'depthCol')
+      .attr('id', 'dataCol')
       .attr("width", 240)
       .attr("height", 864)
       .attr("transform", "translate(642, 0)")
@@ -86,7 +86,8 @@ var prepData = function(data) {
     yNumOfTicks: 10, 
     xScale: true,
     yScale: false,
-    scaleRange: 400
+    scaleRange: 400,
+    element: '#dataCol'
   };
 
    var column2 = {
@@ -176,50 +177,43 @@ var createChart = function(data, colData) {
       break;
   }
    
-  // Add the canvas
-  var svg = d3.select("#col1")
-  // var svg = d3.select("#chart")
-    .append("svg")
-      .attr("transform", "translate(" + colData.offset + ", 0)")
-    .append("g")
-      .attr("transform", "translate(0, 0)");
-  
-  // Define the axes
-  var xAxis = d3.svg.axis().scale(x)
-    .orient("top")
-    .ticks(colData.xNumOfTicks)
-    // .tickSize([height - 20])
-    .tickSubdivide(3)
-    .tickSize(height - 20, 100, 100); 
-         
-  var yAxis = d3.svg.axis().scale(y)
-    .orient("left")
-    .ticks(colData.yNumOfTicks)
+    var svg = d3.select(colData.element)
+    
+    // Define the axes
+    var xAxis = d3.svg.axis().scale(x)
+      .orient("top")
+      .ticks(colData.xNumOfTicks)
+      .tickSubdivide(3)
+      .tickSize(height - 20, 100, 100); 
+           
+    var yAxis = d3.svg.axis().scale(y)
+      .orient("left")
+      .ticks(colData.yNumOfTicks)
 
-  // Add the x-axis
-  if (colData.xScale) {
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("fill", 1)
-      .attr("transform", "translate(0, " + height + ")")
-      .call(xAxis)
-  }
+    // Add the x-axis
+    if (colData.xScale) {
+      svg.append("g")
+        .attr("class", "x axis")
+        .attr("fill", 1)
+        .attr("transform", "translate(0, " + height + ")")
+        .call(xAxis)
+    }
 
-  // Add the y-axis
-  if (colData.yScale) {
-    svg.append("g")
-      .attr("class", "y axis")
-      .attr("transform", "translate(0, 0)")
-      .call(yAxis)
-      .selectAll("text")
-    .attr("y", 0)
-    .attr("x", 9)
-    .attr("dy", ".35em")
-    .attr("transform", "rotate(90)")
-  }
+    // Add the y-axis
+    if (colData.yScale) {
+      svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(0, 0)")
+        .call(yAxis)
+        .selectAll("text")
+      .attr("y", 0)
+      .attr("x", 9)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(90)")
+    }
 
-  // Add the line path
-  svg.append("path")
+    // Add the line path
+    svg.append("path")
       .attr("class", "line")
       .attr("d", lineData(data))
       .style({
@@ -227,8 +221,8 @@ var createChart = function(data, colData) {
         stroke: colData.color,
       });
 
-  // Add text
-  svg.append("text")
+    // Add text
+    svg.append("text")
       .attr("transform", "translate(0, 10)")
       .attr("x", (width / 2))
       .attr("y", 0 - (margin.top / 2))
@@ -236,7 +230,7 @@ var createChart = function(data, colData) {
       .style("font-size", "16px")
       .style("text-decoration", "underline")
       .text(colData.header);
-
+  
 };
 
 
