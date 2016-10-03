@@ -1,35 +1,56 @@
 $(document).ready(function() {
-	// getData();
+
+   var depthCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'depthCol')
+      .attr("width", 92)
+      .attr("height", 864)
+      .attr("transform", "translate(192, 0)")
+      .style('background-color', "#f9f9e0")
+
+  var lithCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'lithCol')
+      .attr("width", 92)
+      .attr("height", 864)
+      .attr("transform", "translate(92, 0)")
+      .style('background-color', "#f9f9e0")
+
+	var minCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'minCol')
+      .attr("width", 160)
+      .attr("height", 864)
+      .attr("transform", "translate(184, 0)")
+      .style('background-color', "#f9f9e0")
+
+  var symCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'symCol')
+      .attr("width", 18)
+      .attr("height", 864)
+      .attr("transform", "translate(202, 0)")
+      .style('background-color', "#f9f9e0")
+
+  var descCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'descCol')
+      .attr("width", 200)
+      .attr("height", 864)
+      .attr("transform", "translate(402, 0)")
+      .style('background-color', "#f9f9e0")
+
+  var dataCol = d3.select("#chart_container")
+    .append("svg")
+      .attr('id', 'depthCol')
+      .attr("width", 240)
+      .attr("height", 864)
+      .attr("transform", "translate(642, 0)")
+      .style('background-color', "#f9f9e0")
 
   d3.json("/measurements", prepData);
-
-  function draw(data){
-    prepData(data)
-  }
-
+  
 });
-
-// var getData = function() {
-//   console.log("Inside getData function")
-
-//   var request = $.ajax({
-//     url: '/measurements';
-//     method: 'GET'
-//   });
-
-//   // Get the data from '/measurements' url
-//   request.done(function(responseData) {
-//     data = responseData
-//     prepData(responseData);
-//   });
-
-//   request.fail(function(responseData) {
-//     console.log("getFields AJAX call failed");
-//   }); 
-// }; 
-
-// -------------------------------------------------------
-
 
 var prepData = function(data) {
 
@@ -51,15 +72,16 @@ var prepData = function(data) {
   };
 
   var column1 = {
-    lineData: "rop",
+    lineData: "tempOut",
     offset: 24,
     width: 192,
     height: 864,
-    color: "#0000ff",
+    // color: "#c2232B",
+    color: "#2b5a87",
     stroke: 1,
-    fill: "none",
+    fill: 'none',
     header: "ROP",
-    background: "LightGoldenRodYellow",
+    background: "#f4f4c7",
     xNumOfTicks: 4,
     yNumOfTicks: 10, 
     xScale: true,
@@ -87,34 +109,21 @@ var prepData = function(data) {
 }
 
 var createChart = function(data, colData) {
-  JSON.stringify(data);
 
   console.log("colData", colData)
-
-  // get domain, min and max depth
-  var extent = d3.extent(data, function(d){
-    return d.depth;
-  });
-
-  // Get min and max of depth data
-  var minDepth = extent[0];
-  var maxDepth = extent[1];
-
-  // get domain, min and max depth
-  var dataExtent = d3.extent(data, function(d){
-    return d.temp_out;
-  });
 
   // Set up the globals
   var margin = {top: 30, right:40, bottom: 30, left: 50};
   var width = colData.width;
   var height = colData.height;
 
-  // Set the ranges
-  var tempOutMax = d3.max(data, function(d){return d.temp_out})
-  console.log("temp max = " , tempOutMax)
-  var x = d3.scale.linear().domain([0, colData.scaleRange]).range([0, colData.width]);
-  var y = d3.scale.linear().range([height, 0]);
+  var x = d3.scale.linear()
+    .domain([0, colData.scaleRange])
+    .range([0, colData.width]);
+
+  var y = d3.scale.linear()
+    .range([height, 0])
+    .domain([d3.max(data, function(d) {  return d.depth; }), 0]);
 
   // Define the lines
   // Make this a separate function so that multiple lines can be made
@@ -156,32 +165,25 @@ var createChart = function(data, colData) {
       console.log("Plotting WOB data")
       var lineData = d3.svg.line()
         .x(function(d) { return x(d.wob); })
-        .y(function(d) { return y(d.depth);    })
+        .y(function(d) { return y(d.depth); })
         .interpolate("basis")
       break;
 
     case "depth":
       console.log("No Data")
       var lineData = d3.svg.line()
-        .y(function(d) { return y(d.depth);    })
+        .y(function(d) { return y(d.depth); })
       break;
   }
    
   // Add the canvas
-  var svg = d3.select("#chart_container")
+  var svg = d3.select("#col1")
+  // var svg = d3.select("#chart")
     .append("svg")
-      .attr("width", width)
-      .attr("height", height)
       .attr("transform", "translate(" + colData.offset + ", 0)")
-      .style('background-color', colData.background)
     .append("g")
       .attr("transform", "translate(0, 0)");
-           
-    // Scale the range of the data
-    // // x.domain(d3.extent(data, function(d) {  return d.temp_out;}))
-    x.domain([0, colData.scaleRange])
-    y.domain([d3.max(data, function(d) {  return d.depth; }), 0])
-    
+  
   // Define the axes
   var xAxis = d3.svg.axis().scale(x)
     .orient("top")
@@ -194,7 +196,6 @@ var createChart = function(data, colData) {
     .orient("left")
     .ticks(colData.yNumOfTicks)
 
- 
   // Add the x-axis
   if (colData.xScale) {
     svg.append("g")
