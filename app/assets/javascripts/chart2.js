@@ -23,7 +23,7 @@ var idKey = {
 var data;
 
 var container_dimensions = {
-	width: 310, 
+	width: 600, 
 	height: 800
 };
 
