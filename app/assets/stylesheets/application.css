@@ -32,54 +32,6 @@
   font-family: 'Futura', sans-serif;
 }
 
- .flex-container {
-  display: flex;
-  flex-flow: row wrap;
-  min-width: 800px;
-
-}
-
-body > div > header, nav, main, aside, footer {
-  background: #ccc;
-  border-radius: 7px;
-  margin: 5px;
-  padding: 20px;
-}
-
-header {
-  order: 1;
-  height: 100px;
-  flex: 0 1 100%;
-}
-
-nav {
-  order: 2;
-  flex: 0 1 200px;
-}
-
-main {
-  order: 3;
-  min-height: 400px;
-  flex: 1;
-}
-
-aside {
-  order: 4;
-  flex: 0 1 200px;
-}
-
-footer {
-  order: 5;
-  height: 100px;
-  flex: 0 1 100%;
-}
-
-#chart_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 svg {
   border: 1px solid gray;
 }
@@ -95,7 +47,6 @@ svg {
 body { 
   font: 12px "Times New Roman", Georgia, Serif;;
 }
-
 
 path {
   /*stroke: steelblue; */
@@ -119,6 +70,25 @@ path {
 .axis .minor {
   stroke: red;
   stroke-width: 0.4px;
+}
+
+.key {
+    float: right;
+}
+
+.parameter {
+    font-size: 17px;
+    width: 100%;
+}
+
+.key_square {
+    height: 10px;
+    width: 10px;
+    outline: solid 1px black;
+    float: left;
+    margin-right: 10px;
+    margin-top: 6px;
+    margin-left: 10px;
 }
 
 

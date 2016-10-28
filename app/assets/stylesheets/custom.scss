@@ -1,0 +1,38 @@
+body {
+	padding: 60px;
+	margin: 60px;
+}
+
+#chart_container {
+	float: left;
+}
+
+/*footer .glyphicon {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #f4511e;
+}*/
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #aaaaaa;
+  a {
+  	color: #555555;
+  	&:hover {
+  		color: #ffffff
+  	}
+  }
+  small {
+  	float: left;
+  }
+  ul {
+  	float: right;
+  	list-style: none;
+  	li {
+  		float: left;
+  		margin-left: 15px;
+  	}
+  }
+}
