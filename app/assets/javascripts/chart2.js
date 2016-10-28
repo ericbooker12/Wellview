@@ -39,19 +39,6 @@ var chart_dimensions = {
 	height: container_dimensions.height - margins.top - margins.bottom
 };
 
- // var request = $.ajax({
- //      url: 'measurements/td',
- //      dataType: 'json',
- //      method: 'GET'
- //    });
-
- //    request.done(function(responseData) {
- //  		console.log('td = ', responseData)
- //    });
-
- //    request.fail(function(responseData) {
- //      console.log("Get td failed");
- //    });
 function td(stuff) {
 	console.log(stuff);
 }
