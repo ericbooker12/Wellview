@@ -72,8 +72,8 @@ path {
   stroke-width: 0.4px;
 }
 
-.key {
-    float: right;
+#key {
+    
 }
 
 .parameter {
@@ -90,6 +90,7 @@ path {
     margin-top: 6px;
     margin-left: 10px;
 }
+
 
 
 
