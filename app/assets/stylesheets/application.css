@@ -39,7 +39,7 @@
 
 }
 
-body > div > header, nav, main, aside, footer {
+body > div > header, nav, main, footer {
   background: #ccc;
   border-radius: 7px;
   margin: 5px;
@@ -63,10 +63,10 @@ main {
   flex: 1;
 }
 
-aside {
+/*aside {
   order: 4;
   flex: 0 1 200px;
-}
+}*/
 
 footer {
   order: 5;
@@ -119,6 +119,25 @@ path {
 .axis .minor {
   stroke: red;
   stroke-width: 0.4px;
+}
+
+.key {
+    float: right;
+}
+
+.parameter {
+    font-size: 17px;
+    width: 100%;
+}
+
+.key_square {
+    height: 10px;
+    width: 10px;
+    outline: solid 1px black;
+    float: left;
+    margin-right: 10px;
+    margin-top: 6px;
+    margin-left: 10px;
 }
 
 
