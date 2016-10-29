@@ -7,9 +7,10 @@ class CreateMeasurements < ActiveRecord::Migration[5.0]
       t.float :temp_in
       t.float :temp_out
       t.float :pressure
-      t.integer :well_id
+      t.references :well, foreign_key: true
 
       t.timestamps
     end
+    add_index :measurements, :well_id
   end
 end

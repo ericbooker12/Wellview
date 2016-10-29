@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912002303) do
+ActiveRecord::Schema.define(version: 20161029184138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 20160912002303) do
     t.string   "start_date"
     t.string   "end_date"
     t.float    "total_depth"
-    t.string   "rig_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "rig_id"
   end
 
 end

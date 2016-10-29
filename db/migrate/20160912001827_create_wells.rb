@@ -6,9 +6,11 @@ class CreateWells < ActiveRecord::Migration[5.0]
       t.string :start_date
       t.string :end_date
       t.float :total_depth
-      t.string :rig_id
+      t.references :rig, foreign_key: true
 
       t.timestamps
     end
+
+    add_index :wells, :rig_id
   end
 end

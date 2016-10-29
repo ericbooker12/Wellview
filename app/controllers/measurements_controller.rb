@@ -1,6 +1,8 @@
 class MeasurementsController < ApplicationController
 	def index
-		@data = Measurement.all
+		# @data = Measurement.all
+		# @data = Measurement.find
+
 		render :json => @data
 	end
 
