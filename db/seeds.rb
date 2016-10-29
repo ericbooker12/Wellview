@@ -1,83 +1,83 @@
 # # # Seed data from file
 require 'faker'
 
-Rig.delete_all
-Well.delete_all
-Measurement.delete_all
+# Rig.delete_all
+# Well.delete_all
+# Measurement.delete_all
 
-10.times do 
-	Rig.create(
-		name: "Rig #{Faker::Number.number(1)}",
-		company: Faker::Company.name
-	)
-end
+# 10.times do 
+# 	Rig.create(
+# 		name: "Rig #{Faker::Number.number(1)}",
+# 		company: Faker::Company.name
+# 	)
+# end
 
-# Seed well data
- new_well = Well.new(
-	name: "#{Faker::Name.first_name}-#{Faker::Number.number(2)}",
-	location: "N 416524.0, E 1769412.4",
-	start_date: "2/6/2009",
-	end_date: "3/24/2009",
-	total_depth: 7622,
-	rig_id: 2
-)
- new_well.save!
+# # Seed well data
+#  new_well = Well.new(
+# 	name: "#{Faker::Name.first_name}-#{Faker::Number.number(2)}",
+# 	location: "N 416524.0, E 1769412.4",
+# 	start_date: "2/6/2009",
+# 	end_date: "3/24/2009",
+# 	total_depth: 7622,
+# 	rig_id: 2
+# )
+#  new_well.save!
 
- data = Measurement.new(
-		depth: 0,
-		rop: 0,
-		wob: 0,
-		temp_in: 0,
-		temp_out: 0,
-		pressure: 0,
-		well_id: 1
-	) 
- data.save!
+#  data = Measurement.new(
+# 		depth: 0,
+# 		rop: 0,
+# 		wob: 0,
+# 		temp_in: 0,
+# 		temp_out: 0,
+# 		pressure: 0,
+# 		well_id: 1
+# 	) 
+#  data.save!
 
 
-rows = []
-File.foreach("depth.txt") do |line|  # read in one line/row at a time
-	row = line.split(" ") 			# convert each row to an array
+# rows = []
+# File.foreach("depth.txt") do |line|  # read in one line/row at a time
+# 	row = line.split(" ") 			# convert each row to an array
 
-	i = 0
-	new_row = []
-	while i < 6						# only get the first 6 columns
-		new_row << row.shift.to_f	# convert the elements to a decimal/float
-		i += 1						# and shovel into another array
-	end
-	rows << new_row					# shovel row array into array
-end 								# end up with double array representing rows and columns
+# 	i = 0
+# 	new_row = []
+# 	while i < 6						# only get the first 6 columns
+# 		new_row << row.shift.to_f	# convert the elements to a decimal/float
+# 		i += 1						# and shovel into another array
+# 	end
+# 	rows << new_row					# shovel row array into array
+# end 								# end up with double array representing rows and columns
 
-rows.each do |row|					#[69.00, 139.30, 35.90, 54.30, 58.42, 635.66]
+# rows.each do |row|					#[69.00, 139.30, 35.90, 54.30, 58.42, 635.66]
 	
-	data = Measurement.new(
-		depth: row[0],
-		rop: row[1],
-		wob: row[2],
-		temp_in: row[3],
-		temp_out: row[4],
-		pressure: row[5],
-		well_id: 1
-	) 
-	data.save!
-end
+# 	data = Measurement.new(
+# 		depth: row[0],
+# 		rop: row[1],
+# 		wob: row[2],
+# 		temp_in: row[3],
+# 		temp_out: row[4],
+# 		pressure: row[5],
+# 		well_id: 1
+# 	) 
+# 	data.save!
+# end
 
-data = Measurement.new(
-		depth: 7623,
-		rop: 0,
-		wob: 0,
-		temp_in: 0,
-		temp_out: 0,
-		pressure: 0,
-		well_id: 1
-	) 
- data.save!
+# data = Measurement.new(
+# 		depth: 7623,
+# 		rop: 0,
+# 		wob: 0,
+# 		temp_in: 0,
+# 		temp_out: 0,
+# 		pressure: 0,
+# 		well_id: 1
+# 	) 
+#  data.save!
 
-# Seed rig data
-Rig.create(
-	name: "Rig 3",
-	company: Faker::Company.name
-)
+# # Seed rig data
+# Rig.create(
+# 	name: "Rig 3",
+# 	company: Faker::Company.name
+# )
 
 
 
@@ -91,6 +91,21 @@ Rig.create(
 # 		total_depth: Faker::Number.number(4)
 # 	)
 # end
+
+# iterate through header.dat file
+header = File.open('header.dat', File::RDONLY) do |f| 
+	f.read
+end
+
+array = header.lines.map(&:split)
+
+header.strip!
+
+# replace any white spaces that occur 3 or more times w/'###'
+header.gsub!(/\s{3,}/, '###') 
+header_data = header.split('###')
+
+p header_data
 
 
 
