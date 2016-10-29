@@ -1,9 +1,12 @@
 class MeasurementsController < ApplicationController
 	def index
-		# @data = Measurement.all
-		# @data = Measurement.find
-
-		render :json => @data
+		@well1 = Well.find(1)
+		@well2 = Well.find(2)
+		@well3 = Well.find(3)
+		@data1 = @well1.measurements
+		@data2 = @well2.measurements
+		@data3 = @well3.measurements
+		render :json => @data2
 	end
 
 	def td
