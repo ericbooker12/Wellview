@@ -6,7 +6,7 @@ class MeasurementsController < ApplicationController
 		@data1 = @well1.measurements
 		@data2 = @well2.measurements
 		@data3 = @well3.measurements
-		render :json => @data2
+		render :json => @data1
 	end
 
 	def td
