@@ -6,12 +6,24 @@
     </div>
     <div class="row-fluid">
       <div class="col-sm-2 well" id="controls">
-      <p>
-        <label for="xScale">
-         Set scale <span id="x-scale-value"></span>
-        </label>
-        <input type="range" min="1" max="1200" id="xScale"
-        </p>
+
+          <label for="xScale">Set scale<span id="x-scale-value"></span>
+          </label>
+          <input type="range" min="1" max="1200" id="xScale">
+
+          <form id='depthForm'>
+            <br>
+            Set min depth:
+            <br>
+            <input id="Depminth" type="number" name="minDepth">
+            Set max depth:
+            <br>
+            <input id="maxDepth" type="umbern" name="maxDepth">
+            <br>
+            <!-- <button>Update</button> -->
+            <input type="submit" name="updateButton" value="Update min/max depth">
+          </form>
+
       </div>
 
       <div class="row-fluid">

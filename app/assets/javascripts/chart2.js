@@ -1,11 +1,68 @@
 $(document).ready(function(){
 	drawCanvas();
 
-	d3.json("/measurements", draw);
+	// d3.json("/measurements", draw);
 	// var new_data = d3.tsv("depth3.txt");
 	// console.log(new_data)
-	// data = [50, 60 , 60 , 40, 40 , 30]
-	// draw(data)
+	data = [{
+		'id':1,
+		'depth':20.0,
+		'rop':100.3,
+		'wob':35.9,
+		'temp_in':54.3,
+		'temp_out':58.42,
+		'pressure':635.66,
+		'well_id':1,
+		'created_at':'2016-10-29T21:22:39.324Z',
+		'updated_at':'2016-10-29T21:22:39.324Z'
+	},{
+		'id':1,
+		'depth':250.0,
+		'rop':50,
+		'wob':65,
+		'temp_in':125,
+		'temp_out':145,
+		'pressure':400,
+		'well_id':1,
+		'created_at':'2016-10-29T21:22:39.324Z',
+		'updated_at':'2016-10-29T21:22:39.324Z'
+	},{
+		'id':1,
+		'depth':500.0,
+		'rop':10,
+		'wob':40,
+		'temp_in':150,
+		'temp_out':185,
+		'pressure':500,
+		'well_id':1,
+		'created_at':'2016-10-29T21:22:39.324Z',
+		'updated_at':'2016-10-29T21:22:39.324Z'
+	},{
+		'id':1,
+		'depth':750.0,
+		'rop':25,
+		'wob':20,
+		'temp_in':140,
+		'temp_out':200,
+		'pressure':400,
+		'well_id':1,
+		'created_at':'2016-10-29T21:22:39.324Z',
+		'updated_at':'2016-10-29T21:22:39.324Z'
+	},{
+		'id':1,
+		'depth':1000.0,
+		'rop':10,
+		'wob':75,
+		'temp_in':135,
+		'temp_out':150,
+		'pressure':850,
+		'well_id':1,
+		'created_at':'2016-10-29T21:22:39.324Z',
+		'updated_at':'2016-10-29T21:22:39.324Z'
+	}];
+
+	draw(data)
+
 
 });
 
@@ -18,6 +75,8 @@ var col;
 var depthAxis;
 var maxDepth;
 var minDepth;
+var maxDepthScale;
+var minDepthScale;
 var keyItems;
 var params = ['temp_out', 'temp_in', 'pressure', 'wob', 'rop'];
 var idKey = {
@@ -94,7 +153,17 @@ function draw(data) {
 			}
 			var curr_id = d3.select(this).attr('id')
 			getData(curr_id);
-		});
+	});
+
+	$('#depthForm').on('submit', function(event) {
+		event.preventDefault();
+		console.log("button Pressed")
+		minDepthScale = $('input[name="minDepth"]').val();  //Get minimum depth scale from input
+		maxDepthScale = $('input[name="maxDepth"]').val();	//Get maximum depth scale from input
+		updateDepthScale(minDepthScale, maxDepthScale)
+
+	})
+
 
 };
 
@@ -112,15 +181,24 @@ function updateXScale(maxValX) {
 				// console.log('this is d: ', d)
 				getData(d);
 			});
-
-		// console.log('active_path: ', active_path);
-
-		// for (var i = 0; i < active_path.length; i++) {
-		// 	console.log(active_path[i].attr('class'))
-		// }
-		// getData(active_id[0])
 }
 
+function updateDepthScale(minDepth, maxDepth) {
+
+		d3.select('.depth').remove();	// Remove existing axis
+
+		setupDepthAxis(minDepth, maxDepth);		// Redraw axis with new max value
+
+		// d3.select('.line_path').remove();
+
+		// var active_path = d3.selectAll('.active')
+
+
+		// 	.each(function(d) {
+		// 		// console.log('this is d: ', d)
+		// 		getData(d);
+		// 	});
+}
 function drawCanvas() {
 	// Todo: create a separate svg element for the depth scale
 	// to keep it separate from the chart_container
@@ -135,8 +213,6 @@ function drawCanvas() {
 };
 
 function setupXAxis(maxVal) {
-
-	// console.log(maxVal)
 
 	xScale = d3.scale.linear()
 		.range([0, chart_dimensions.width])
@@ -155,10 +231,10 @@ function setupXAxis(maxVal) {
    		.call(xAxis);
 }
 
-function setupDepthAxis() {
+function setupDepthAxis(min, max) {
 	depthScale = d3.scale.linear()
 		.range([chart_dimensions.height, 0])
-    	.domain([maxDepth, minDepth]);
+    	.domain([max, min]);
 
     depthAxis = d3.svg.axis()
    		.scale(depthScale)
@@ -211,7 +287,7 @@ function drawLine(filtered_data, id) {
         // .x(function(d) { return xScale(d.temp_out); })
         .x(function(d) { return lineXScale(d.param) })
         .y(function(d) { return depthScale(d.depth);    })
-        .interpolate("step-after");
+        .interpolate("linear");
 
     // console.log(id);
 
