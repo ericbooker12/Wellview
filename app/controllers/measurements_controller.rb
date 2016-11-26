@@ -7,7 +7,8 @@ class MeasurementsController < ApplicationController
 		@data2 = @well2.measurements
 		@data3 = @well3.measurements
 		@data4 = Measurement.first(100)
-		render :json => @data4
+
+		render :json => @data1
 	end
 
 	def td

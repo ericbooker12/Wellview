@@ -1,69 +1,22 @@
 $(document).ready(function(){
 	drawCanvas();
 
-	// d3.json("/measurements", draw);
-	// var new_data = d3.tsv("depth3.txt");
-	// console.log(new_data)
-	data = [{
-		'id':1,
-		'depth':20.0,
-		'rop':100.3,
-		'wob':35.9,
-		'temp_in':54.3,
-		'temp_out':58.42,
-		'pressure':635.66,
-		'well_id':1,
-		'created_at':'2016-10-29T21:22:39.324Z',
-		'updated_at':'2016-10-29T21:22:39.324Z'
-	},{
-		'id':1,
-		'depth':250.0,
-		'rop':50,
-		'wob':65,
-		'temp_in':125,
-		'temp_out':145,
-		'pressure':400,
-		'well_id':1,
-		'created_at':'2016-10-29T21:22:39.324Z',
-		'updated_at':'2016-10-29T21:22:39.324Z'
-	},{
-		'id':1,
-		'depth':500.0,
-		'rop':10,
-		'wob':40,
-		'temp_in':150,
-		'temp_out':185,
-		'pressure':500,
-		'well_id':1,
-		'created_at':'2016-10-29T21:22:39.324Z',
-		'updated_at':'2016-10-29T21:22:39.324Z'
-	},{
-		'id':1,
-		'depth':750.0,
-		'rop':25,
-		'wob':20,
-		'temp_in':140,
-		'temp_out':200,
-		'pressure':400,
-		'well_id':1,
-		'created_at':'2016-10-29T21:22:39.324Z',
-		'updated_at':'2016-10-29T21:22:39.324Z'
-	},{
-		'id':1,
-		'depth':1000.0,
-		'rop':10,
-		'wob':75,
-		'temp_in':135,
-		'temp_out':150,
-		'pressure':850,
-		'well_id':1,
-		'created_at':'2016-10-29T21:22:39.324Z',
-		'updated_at':'2016-10-29T21:22:39.324Z'
-	}];
+	d3.json("/measurements", draw);
 
-	draw(data)
+	d3.select("#xScale").on("input", function() {
+	  	// setupXAxis(+this.value);
+	  	updateXScale(+this.value);
+	  	// console.log(+this.value);
+	});
 
+	$('#depthForm').on('submit', function(event) {
+		event.preventDefault();
+		console.log("button Pressed")
+		minDepthScale = $('input[name="minDepth"]').val();  //Get minimum depth scale from input
+		maxDepthScale = $('input[name="maxDepth"]').val();	//Get maximum depth scale from input
+		updateDepthScale(minDepthScale, maxDepthScale)
 
+	})
 });
 
 // Global variables
@@ -111,18 +64,10 @@ function draw(data) {
 	maxDepth = d3.max(data, function(d) {  return d.depth; })
 	minDepth = d3.min(data, function(d) {  return d.depth; })
 
-	setupXAxis(400); //Set initial max value for x axis
+	setupXAxis(400); 						// Set initial max value for x axis
+	setupDepthAxis(minDepth, maxDepth);  	// Setup default axis with min and max data range
 
-	d3.select("#xScale").on("input", function() {
-	  	// setupXAxis(+this.value);
-	  	updateXScale(+this.value);
-	  	// console.log(+this.value);
-
-	});
-
-	setupDepthAxis();
-
-	//Build the key
+	// Build the key
 	keyItems = d3.select('#key')
 		.selectAll('div')
 		.data(params)
@@ -131,8 +76,6 @@ function draw(data) {
 			.attr('class', 'parameter')
 			// Give each div a unique id based on parameter
 			.attr('id', function(d) { return d });
-
-	// console.log(idKey['tempIn'])
 
 	keyItems.append('div')
 		.attr('id', function(d) { return 'key_square_' + d })
@@ -152,19 +95,9 @@ function draw(data) {
 				d3.select(this).classed('parameter', true)
 			}
 			var curr_id = d3.select(this).attr('id')
-			getData(curr_id);
-	});
-
-	$('#depthForm').on('submit', function(event) {
-		event.preventDefault();
-		console.log("button Pressed")
-		minDepthScale = $('input[name="minDepth"]').val();  //Get minimum depth scale from input
-		maxDepthScale = $('input[name="maxDepth"]').val();	//Get maximum depth scale from input
-		updateDepthScale(minDepthScale, maxDepthScale)
-
-	})
-
-
+			// getData(curr_id);
+		});
+			drawLine2()
 };
 
 
@@ -189,15 +122,13 @@ function updateDepthScale(minDepth, maxDepth) {
 
 		setupDepthAxis(minDepth, maxDepth);		// Redraw axis with new max value
 
-		// d3.select('.line_path').remove();
+		d3.select('.line_path').remove();
 
-		// var active_path = d3.selectAll('.active')
-
-
-		// 	.each(function(d) {
-		// 		// console.log('this is d: ', d)
-		// 		getData(d);
-		// 	});
+		var active_path = d3.selectAll('.active')
+			.each(function(d) {
+				// console.log('this is d: ', d)
+				getData(d);
+			});
 }
 function drawCanvas() {
 	// Todo: create a separate svg element for the depth scale
@@ -261,6 +192,7 @@ function getData(curr_id) {
 	var id = curr_id;
 	var itemClass = d3.select('#' + id).attr('class')
 	var ts = d3.select('#' + id + '_path');
+
 	// console.log('this', this);
 	filtered_data = [];
 	if (ts.empty()) {
@@ -281,20 +213,21 @@ function getData(curr_id) {
 }
 
 function drawLine(filtered_data, id) {
-	console.log(id);
+	// console.log(id);
 	// console.log(filtered_data)
 	var lineData = d3.svg.line()
         // .x(function(d) { return xScale(d.temp_out); })
         .x(function(d) { return lineXScale(d.param) })
-        .y(function(d) { return depthScale(d.depth);    })
+        .y(function(d) { return depthScale(d.depth) })
         .interpolate("linear");
 
     // console.log(id);
 
   	var g = d3.select('#chart')
-  		.append('svg')
+  		.append('svg')  //This svg is the element that the lines are drawn on
   			.attr('x', 0)
   			.attr('y', 0)
+  			.attr('height', chart_dimensions.height)
   			.attr('class', 'line_path')
   		.append('g')
 	  		.attr('id', id + '_path')
@@ -309,8 +242,54 @@ function drawLine(filtered_data, id) {
 	 d3.select('#pressure_path').style('stroke', 'red');
 	 d3.select('#wob_path').style('stroke', 'black');
 	 d3.select('#rop_path').style('stroke', 'green');
-
-
-
 }
+
+
+function drawLine2() {
+
+	for (var i = 0; i < params.length; i++) {
+		var lineData = d3.svg.line()
+	        .x(function(d) { return lineXScale(d[params[i]]) })
+	        .y(function(d) { return depthScale(d.depth) })
+	        .interpolate("linear");
+
+		appendData(lineData, params[i]);
+    }
+
+    var tempInLineData = d3.svg.line()
+        .x(function(d) { return lineXScale(d.temp_in) })
+        .y(function(d) { return depthScale(d.depth);    })
+        .interpolate("linear");
+
+    // console.log(id);
+
+    function appendData(lineData, id) {
+		var g = d3.select('#chart')
+  			.append('svg')				// This svg is the element that the lines are drawn on
+	  			.attr('x', 0)
+	  			.attr('y', 0)
+	  			.attr('height', chart_dimensions.height)
+	  			.attr('class', 'line_path')
+	  		.append('g')
+		  		.attr('id', id + '_path')
+
+  		g.append('path')
+	  		.attr('d', lineData(data))
+	  		.style('fill', 'none');
+	}
+
+	 d3.select('#temp_out_path').style('stroke', 'red');
+	 d3.select('#temp_in_path').style('stroke', 'blue');
+	 d3.select('#pressure_path').style('stroke', 'red');
+	 d3.select('#wob_path').style('stroke', 'black');
+	 d3.select('#rop_path').style('stroke', 'green');
+}
+
+
+
+
+
+
+
+
 
