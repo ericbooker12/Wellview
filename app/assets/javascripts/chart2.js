@@ -17,6 +17,7 @@ var chart;
 var col;
 var depthAxis;
 var maxDepth;
+var minDepth;
 var keyItems;
 var params = ['temp_out', 'temp_in', 'pressure', 'wob', 'rop'];
 var idKey = {
@@ -46,20 +47,18 @@ var chart_dimensions = {
 	height: container_dimensions.height - margins.top - margins.bottom
 };
 
-function td(stuff) {
-	console.log(stuff);
-}
-
 function draw(data) {
 	this.data = data;
 	maxDepth = d3.max(data, function(d) {  return d.depth; })
+	minDepth = d3.min(data, function(d) {  return d.depth; })
 
 	setupXAxis(400); //Set initial max value for x axis
 
-	d3.select("#nRadius").on("input", function() {
-	  	setupXAxis(+this.value);
+	d3.select("#xScale").on("input", function() {
 	  	// setupXAxis(+this.value);
-	  	console.log(+this.value);
+	  	updateXScale(+this.value);
+	  	// console.log(+this.value);
+
 	});
 
 	setupDepthAxis();
@@ -85,20 +84,46 @@ function draw(data) {
 		.text(function(d) { return idKey[d] })
 
 	// Add chart when clicked
-	d3.selectAll(".parameter")
-		.on('click', getData);
+	var active_path = d3.selectAll(".parameter")
+		.on('click', function() {
+			if (d3.select(this).attr('class') == 'parameter') {
+				d3.select(this).classed('parameter active', true)
+			} else if (d3.select(this).attr('class') == 'parameter active') {
+				d3.select(this).classed('parameter active', false)
+				d3.select(this).classed('parameter', true)
+			}
+			var curr_id = d3.select(this).attr('id')
+			getData(curr_id);
+		});
 
 };
+
+
+function updateXScale(maxValX) {
+		d3.select('.x').remove();	// Remove existing axis
+		setupXAxis(maxValX);		// Redraw axis with new max value
+
+		d3.select('.line_path').remove();
+
+		var active_path = d3.selectAll('.active')
+
+
+			.each(function(d) {
+				// console.log('this is d: ', d)
+				getData(d);
+			});
+
+		// console.log('active_path: ', active_path);
+
+		// for (var i = 0; i < active_path.length; i++) {
+		// 	console.log(active_path[i].attr('class'))
+		// }
+		// getData(active_id[0])
+}
 
 function drawCanvas() {
 	// Todo: create a separate svg element for the depth scale
 	// to keep it separate from the chart_container
-
-	// col = d3.select('#chart_container')
-	// 	.append('svg')
-	// 		.attr('width', 100)
-	// 		.attr('height', container_dimensions.height)
-	// 		.attr('id', 'depth-col');
 
 	chart = d3.select('#chart_container')
 		.append('svg')
@@ -111,8 +136,8 @@ function drawCanvas() {
 
 function setupXAxis(maxVal) {
 
-	console.log(maxVal)
-	d3.select('.x').remove();
+	// console.log(maxVal)
+
 	xScale = d3.scale.linear()
 		.range([0, chart_dimensions.width])
 		.domain([0, maxVal]);
@@ -133,7 +158,7 @@ function setupXAxis(maxVal) {
 function setupDepthAxis() {
 	depthScale = d3.scale.linear()
 		.range([chart_dimensions.height, 0])
-    	.domain([maxDepth, 0]);
+    	.domain([maxDepth, minDepth]);
 
     depthAxis = d3.svg.axis()
    		.scale(depthScale)
@@ -155,9 +180,10 @@ function setupDepthAxis() {
 			.attr('letter-spacing', 5);
 }
 
-function getData() {
-	var id = d3.select(this).attr('id')
-	var itemClass = d3.select(this).attr('class')
+function getData(curr_id) {
+	// var id = d3.select(this).attr('id')
+	var id = curr_id;
+	var itemClass = d3.select('#' + id).attr('class')
 	var ts = d3.select('#' + id + '_path');
 	// console.log('this', this);
 	filtered_data = [];
@@ -179,7 +205,7 @@ function getData() {
 }
 
 function drawLine(filtered_data, id) {
-
+	console.log(id);
 	// console.log(filtered_data)
 	var lineData = d3.svg.line()
         // .x(function(d) { return xScale(d.temp_out); })
@@ -187,15 +213,16 @@ function drawLine(filtered_data, id) {
         .y(function(d) { return depthScale(d.depth);    })
         .interpolate("step-after");
 
-    console.log(id);
+    // console.log(id);
 
   	var g = d3.select('#chart')
   		.append('svg')
   			.attr('x', 0)
   			.attr('y', 0)
+  			.attr('class', 'line_path')
   		.append('g')
 	  		.attr('id', id + '_path')
-	  		.attr('class', id.split('_')[1]);
+	  		// .attr('class', id);
 
   	g.append('path')
 	  		.attr('d', lineData(filtered_data))
@@ -210,14 +237,4 @@ function drawLine(filtered_data, id) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
 

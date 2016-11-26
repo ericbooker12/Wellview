@@ -5,7 +5,7 @@ body {
 
 #chart_container {
 	float: left;
-  border: 1px solid black
+  // border: 1px solid black
 }
 
 footer {
@@ -41,9 +41,18 @@ svg {
   margin: 50px;
 }
 
-.temp_out_path {
-  color: #ff0000
+div#key {
+  width: 175px;
 }
+
+#controls {
+  position: absolute;
+  margin-top: 20px;
+  top: 300px;
+  width: 175px;
+  /*width: 120px;*/
+}
+
 
 
 

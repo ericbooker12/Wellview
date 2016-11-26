@@ -85,12 +85,13 @@ path {
     margin-left: 10px;
 }
 
-#controls {
-  position: absolute;
-  margin-top: 20px;
-  top: 300px;
-  width: 120px;
+.active .key_square {
+  stroke: red;
+  /*outline: solid 2px red;*/
+  background-color: black;
 }
+
+
 
 
 
