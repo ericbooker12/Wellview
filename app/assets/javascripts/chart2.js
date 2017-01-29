@@ -95,9 +95,9 @@ function draw(data) {
 				d3.select(this).classed('parameter', true)
 			}
 			var curr_id = d3.select(this).attr('id')
-			// getData(curr_id);
+			getData(curr_id);
 		});
-			drawLine2()
+			// drawLine2()
 };
 
 
@@ -178,13 +178,13 @@ function setupDepthAxis(min, max) {
    	d3.select('.depth.axis')
    		.append('text')
    			.attr('text-anchor', 'middle')
-   			.text('Depth (ft)')
    			.attr('transform', 'rotate (-270, 0, 0)')
    			.attr('font-family', 'Verdana')
    			.attr('font-size', '15')
 			.attr('x', container_dimensions.height/2)
 			.attr('y', 50)
-			.attr('letter-spacing', 5);
+			.attr('letter-spacing', 5)
+   			.text('Depth (ft)');
 }
 
 function getData(curr_id) {
@@ -251,7 +251,7 @@ function drawLine2() {
 		var lineData = d3.svg.line()
 	        .x(function(d) { return lineXScale(d[params[i]]) })
 	        .y(function(d) { return depthScale(d.depth) })
-	        .interpolate("linear");
+	        .interpolate("step-after");
 
 		appendData(lineData, params[i]);
     }
