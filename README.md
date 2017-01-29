@@ -1,8 +1,8 @@
 # Wellview
 
-<div style="text-align:center" markdown="1">
+
 ![Initial screen](screenshots/main.png "Initial screen")
-</div>
+
 
 ## Context
 Thousands of geothermal wells have been drilled and are currently being drilled all over the world. Several data points are collected for each foot drilled during this process resulting in massives amounts of data stored in cumbersome text files. The resulting files can be thousands of lines long as some wells can reach up to 12,000 ft deep.
