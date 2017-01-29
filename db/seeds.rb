@@ -12,7 +12,7 @@ Measurement.delete_all
 	)
 end
 
-Seed 3 wells
+# Seed 3 wells
 i = 1
 3.times do
 	new_well = Well.new(
