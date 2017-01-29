@@ -44,6 +44,11 @@ Run the server:
 
 Go to localhost:3000 in your web browser.
 
+## Known Bugs
+When the slider is used after the lines are plotted to the graph, the lines become unpredictable and behave erratically.
+
+This will be fixed in the next itteration of this project.
+
 
 
 
