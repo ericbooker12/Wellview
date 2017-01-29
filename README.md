@@ -15,7 +15,7 @@ Because this project is meant to be a vehicle to play with the features of D3.js
 ### *Data parser in db/seeds.rb*
 This is a customized data parser that I wrote to parse through thousands of lines in text file to pull out and format the data needed to graph. It stores the data in a database so that the program no longer relies on the text files.
 
-### *D3.js*
+### *D3.js - assets/javascripts/mainChart.js*
 This was one of the funnest technologies for me to learn. Although challenging at times, it was very satisfying to watch it create meaning charts from otherwise unreadable data.
 
 ### *Horizontal Scale Slider*
