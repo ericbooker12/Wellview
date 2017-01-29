@@ -1,8 +1,6 @@
 # Wellview
 
-
 ![Initial screen](screenshots/main.png "Initial screen")
-
 
 ## Context
 Thousands of geothermal wells have been drilled and are currently being drilled all over the world. Several data points are collected for each foot drilled during this process resulting in massives amounts of data stored in cumbersome text files. The resulting files can be thousands of lines long as some wells can reach up to 12,000 ft deep.
@@ -23,15 +21,14 @@ This was one of the funnest technologies for me to learn. Although challenging a
 ### *Horizontal Scale Slider*
 The user has the ability to change the horizontal scale with a slider.
 
-<div style="text-align:center" markdown="1">
-    ![controls](screenshots/Controls.png "Horizontal and vertical scale controls")
-</div>
+![controls](screenshots/Controls.png "Horizontal and vertical scale controls")
+
 
 ### *Vertical Scale Manipulation*
 The user is able to customize the range of the data being displayed. For example, if you only want to see what is happening between 1300 ft. and 1400 ft., you can insert these values in the text fields and the graph will zoom into to that range.
 
 <div style="text-align:center" markdown="1">
-    ![controls](screenshots/Zoom2Params.png "Horizontal and vertical scale controls")
+![controls](screenshots/Zoom2Params.png "Horizontal and vertical scale controls")
 </div>
 
 
