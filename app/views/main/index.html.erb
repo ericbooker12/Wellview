@@ -2,36 +2,57 @@
 <div class="container-fluid">
 
 	<div class="row-fluid">
-      <div class="col-sm-2 well" id="key"></div>
-    </div>
-    <div class="row-fluid">
+		<div class="col-md-12 text-center">
+			<h2>Well #4422</h2>
+		</div>
+	</div>
+	<br>
+
+	<div class="row-fluid">
+		<div class="col-md-2 well" id="key">
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="col-md-2 well" id="controls">
+
+			<strong>Set x scale:</strong>
+
+			<div class="form-group">
+				<input type="range" min="1" max="1200" id="xScale" class="form-control">
+			</div>
+
+			<form id='depthForm'>
+				<div class="form-group">
+					<strong>Set min depth:</strong> <input id="minDepth" type="number" name="minDepth" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<strong>Set max depth:</strong> <input id="maxDepth" type="number" name="maxDepth" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<input type="submit" name="updateButton" value="Update min/max depth" class="btn btn-xs btn-primary form-control">
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="col-md-8" id="chart_container"></div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="col-md-2 well" id="side-bar">
+			<p><strong>Wellname:</strong> #4422</p>
+			<p><strong>Location:</strong> N000, E000 </p>
+			<p><strong>Date Drilled:</strong> 1/21/1978</p>
+			<p><strong>Date Completed:</strong> 3/2/1978</p>
+			<p><strong>Total Depth:</strong> <%= Measurement.last.depth %> ft.</p>
+		</div>
+	</div>
 
 
-      <div class="col-sm-2 well" id="controls">
-
-          <strong>Set x scale:</strong>
-          <input type="range" min="1" max="1200" id="xScale">
-
-          <form id='depthForm'>
-            <br>
-            <strong>Set min depth:</strong> <input id="Depminth" type="number" name="minDepth">
-            <br>
-            <strong>Set max depth:</strong> <input id="maxDepth" type="umbern" name="maxDepth">
-            <br>
-            <!-- <button>Update</button> -->
-            <input type="submit" name="updateButton" value="Update min/max depth">
-          </form>
-
-      </div>
-
-      <div class="row-fluid">
-        <div class="col-sm-8" id="chart_container"></div>
-      </div>
-
-      <div class="row-fluid">
-        <div class="col-sm-2" id="controls"></div>
-      </div>
-    </div>
 
 
 </div>
