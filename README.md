@@ -42,7 +42,7 @@ After cloning the repo to your local machine run the following commands from the
     rails db:migrate
     rails db:seeds
 
-The seeding the data base will take a few moments because it is parsing through approx 7000 lines of text.
+Seeding the database will take a few moments because it is parsing through over 7000 lines of text.
 
 Run the server:
 
