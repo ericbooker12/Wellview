@@ -3,7 +3,7 @@
 ![Initial screen](screenshots/main.png "Initial screen")
 
 ## Context
-Thousands of geothermal wells have been drilled and are currently being drilled all over the world. Several data points are collected for each foot drilled during this process resulting in massives amounts of data stored in cumbersome text files. The resulting files can be thousands of lines long as some wells can reach up to 12,000 ft deep.
+Thousands of geothermal wells have been drilled and are currently being drilled all over the world. Several data points are collected for each foot drilled during this process resulting in massive amounts of data stored in cumbersome text files. The resulting files can be thousands of lines long as some wells can reach up to 12,000 ft deep.
  
 Wellview is an ongoing project that I created to tackle the cumbersome text file problem and to utilize the features of D3.js. D3.js is a JavaScript library for manipulating documents based on data. The app takes drilling data from geothermal wells in Northern California and displays it in a user friendly graphical format. It uses Ruby on Rails for the backend and JavaScript, specifically the D3.js library, for the front end.
 
@@ -34,7 +34,7 @@ After cloning the repo to your local machine run the following commands from the
 
     rails db:create
     rails db:migrate
-    rails db:seeds
+    rails db:seed
 
 Seeding the database will take a few moments because it is parsing through over 7000 lines of text.
 
