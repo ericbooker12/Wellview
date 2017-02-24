@@ -16,7 +16,7 @@ Because this project is meant to be a vehicle to play with the features of D3.js
 This is a customized tsv data parser that I wrote to parse through texts file to pull out and format the data needed to graph. It stores the data in a database so that the program no longer relies on the text files.
 
 #### *D3.js - assets/javascripts/mainChart.js*
-This was one of the funnest technologies for me to learn. Although challenging at times, it was very satisfying to watch it create meaningful charts from otherwise unreadable data.
+This was one of the funnest technologies for me to learn. Although challenging at times, it was very satisfying create meaningful charts from otherwise unreadable data.
 
 #### *Horizontal Scale Slider*
 The user has the ability to change the horizontal scale with a slider.
