@@ -12,19 +12,19 @@ Because this project is meant to be a vehicle to play with the features of D3.js
 
 ## Key Features
 
-### *Data parser in db/seeds.rb*
+#### *Data parser in db/seeds.rb*
 This is a customized tsv data parser that I wrote to parse through texts file to pull out and format the data needed to graph. It stores the data in a database so that the program no longer relies on the text files.
 
-### *D3.js - assets/javascripts/mainChart.js*
+#### *D3.js - assets/javascripts/mainChart.js*
 This was one of the funnest technologies for me to learn. Although challenging at times, it was very satisfying to watch it create meaningful charts from otherwise unreadable data.
 
-### *Horizontal Scale Slider*
+#### *Horizontal Scale Slider*
 The user has the ability to change the horizontal scale with a slider.
 
 ![controls](screenshots/Controls.png "Horizontal and vertical scale controls")
 
 
-### *Vertical Scale Manipulation*
+#### *Vertical Scale Manipulation*
 The user is able to customize the range of the data being displayed. For example, if you only want to see what is happening between 1300 ft. and 1400 ft., you can insert these values in the text fields and the graph will zoom into to that range.
 
 ![controls](screenshots/Zoom2Params.png "Horizontal and vertical scale controls")
